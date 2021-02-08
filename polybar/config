@@ -1,0 +1,290 @@
+[bar/main]
+
+monitor = DVI-D-0
+
+override-redirect = true
+
+bottom = false
+
+fixed-center = true
+
+width    = 97%:+4
+height   = 20
+offset-x = 27
+offset-y = 2
+
+; Background ARGB color (e.g. #f00, #ff992a, #ddff1023)
+background = #0b0810
+
+border-bottom-color = #0aa756
+border-top-color    = #0aa756
+border-left-color = #0aa756
+border-right-color = #0aa756
+border-bottom-size  = 0
+border-top-size     = 0
+border-left-size  = 0
+border-right-size = 0
+
+; Foreground ARGB color (e.g. #f00, #ff992a, #ddff1023)
+foreground = #ffffff
+
+radius = 0
+
+line-size = 0
+line-color = #0aa756
+
+padding-right = 2
+padding-left = 1
+
+module-margin = 1
+
+#font-0 = Monospace:style=Medium:size=10;3 
+
+; Material Design Icons 
+font-1 = mplus Nerd Font:style=Medium:size=11;3 
+
+; Powerline Glyphs 
+font-2 = mplus Nerd Font:style=Medium:size=16;3 
+
+; Larger font size for bar fill icons 
+font-3 = mplus Nerd Font:style=Medium:size=12;3 
+
+; Smaller font size for shorter spaces 
+font-4 = mplus Nerd Font:style=Medium:size=7;3
+
+font-0 = Monospace:bold:size=10;1.5
+#font-1 = Monospace:style=Solid:size=10;2
+
+modules-left = date polymetals
+modules-center = i3
+modules-right = filesystem pulseaudio cpu memory temperature
+separator = /
+
+dim-value = 1.0
+
+wm-name = i3
+dpi-x = 96
+dpi-y = 96
+
+enable-ipc = false
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+
+; Use fuzzy (partial) matching on labels when assigning
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces
+; containing 'code' in the label
+; Default: false
+fuzzy-match = true
+
+ws-icon-0 = 1;♚
+ws-icon-1 = 2;♛
+ws-icon-2 = 3;♜
+ws-icon-3 = 4;♝
+ws-icon-4 = 5;♞
+ws-icon-default = ♟
+
+label-dimmed-underline = ${root.background}
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 0
+label-mode-background = #e60053
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-focused =  %index%
+label-focused-foreground = #ffffff
+label-focused-background = #242B38
+label-focused-underline = #fba922
+label-focused-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-unfocused-background = #0b0810
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-visible = {%index%}
+label-visible-underline = #555555
+label-visible-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent = %index%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 2
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 0
+label-separator-foreground = #0aa756
+label-separator-background = #101010
+
+format-background = #101010
+
+[module/date]
+type = internal/date
+
+; Seconds to sleep between updates
+interval = 1.0
+
+; See "http://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+date = %d-%m-%Y%
+
+; Optional time format
+time = %H:%M:%S
+
+; if `date-alt` or `time-alt` is defined, clicking
+; the module will toggle between formats
+date-alt = %A, %d %B %Y
+time-alt = %H:%M:%S
+
+label = [%date%][%time%]
+label-font = 0
+label-foreground = #0aa756
+format-background = #0b0810
+format-underline =
+[module/temperature]
+type = internal/temperature
+thermal-zone = 5
+warn-temperature = 65
+
+format = <ramp> <label>
+;format-underline = #f50a4d
+format-warn = <ramp> <label-warn>
+;format-warn-underline = ${self.format-underline}
+
+label = %temperature%
+label-warn = HOT! %temperature%
+label-warn-foreground = #f00
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = #66
+
+[module/polymetals]
+type = custom/script
+exec = ~/.config/polybar/polymetals/polymetals.py -g -s -p 
+;For continuous updates
+tail = true
+label = %output%
+label-foreground = #0aa756
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+format = <ramp-coreload>
+ramp-coreload-0 = ▁
+ramp-coreload-0-font = 2
+ramp-coreload-0-foreground = #0aa756
+ramp-coreload-1 = ▂
+ramp-coreload-1-font = 2
+ramp-coreload-1-foreground = #0aa756
+ramp-coreload-2 = ▃
+ramp-coreload-2-font = 2
+ramp-coreload-2-foreground = #0aa756
+ramp-coreload-3 = ▄
+ramp-coreload-3-font = 2
+ramp-coreload-3-foreground = #0aa756
+ramp-coreload-4 = ▅
+ramp-coreload-4-font = 2
+ramp-coreload-4-foreground = #ff9824
+ramp-coreload-5 = ▆
+ramp-coreload-5-font = 2
+ramp-coreload-5-foreground = #ff9824
+ramp-coreload-6 = ▇
+ramp-coreload-6-font = 2
+ramp-coreload-6-foreground = #ff1111
+ramp-coreload-7 = █
+ramp-coreload-7-font = 2
+ramp-coreload-7-foreground = #ff1111
+
+
+[module/memory]
+type = internal/memory
+format = <bar-used>
+bar-used-width = 20
+bar-used-foreground-0 = #0aa756
+bar-used-foreground-1 = #0aa756
+bar-used-foreground-2 = #ff9824
+bar-used-foreground-3 = #ff0000
+bar-used-indicator =
+bar-used-indicator-font = 6
+bar-used-indicator-foreground = #ff
+bar-used-fill = ─
+bar-used-fill-font = 6
+bar-used-empty = ─
+bar-used-empty-font = 6
+bar-used-empty-foreground = #999999
+label-underline = #ff0000
+
+
+#[module/spotify]
+#type = custom/script
+#interval = 1
+#format-prefix = "♫"
+#format = <label>
+#exec = python ~/.config/polybar-spotify/spotify_status.py -f '{song}'
+#format-underline = #1db954
+
+[module/pulseaudio]
+type = internal/pulseaudio
+sink = alsa_output.pci-0000_12_00.3.analog-stereo
+use-ui-max = true
+interval = 5
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+;label-mounted = %mountpoint%: %percentage_free%
+label-mounted =  %mountpoint%: %used% of %total%
+label-mounted-foreground = #ffffff
+
+label-unmounted = %mountpoint%: not mounted
+label-unmounted-foreground = #55
+
+[module/la5]
+type = custom/text
+
+; Label
+content            = %{T3}%{T-}
+content-foreground = #0b0810
+content-background = #0b0810 
